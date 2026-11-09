@@ -1,0 +1,11 @@
+__base__:
+  - config/irstd_sirst4_500ep_smsp_tpa_640x640.yaml
+project_name: DiffIRSTD-SIRST-UAV-500ep-SMSP-TPA
+evaluation_datasets: [SIRST-UAV]
+train_dataset:
+  params:
+    roots: [./data/SIRST-UAV]
+test_dataset:
+  mixed:
+    params:
+      roots: [./data/SIRST-UAV]

@@ -1,0 +1,36 @@
+__base__:
+  - config/irstd_small_v3_640x640.yaml
+project_name: DiffIRSTD-SIRST4-500ep-SMSP-TPA
+val_interval: 1
+evaluation_datasets: [SIRST4]
+dataset_score_weights: null
+split_batches: false
+eval_batch_size: 8
+log_interval: 10
+warmup_epochs: 5
+unfreeze_epoch: 15
+ema_decay: 0.999
+diffusion_model:
+  params:
+    # TPA replaces the inherited resolution-based shift, not an extra shift.
+    noise_d: null
+    noise_d_low: null
+    noise_d_high: null
+    smsp:
+      probability: 0.5
+      strength: 0.35
+      max_shift: 1
+      kernel_size: 3
+      patch_size: 16
+      time_min: 0.05
+      time_max: 0.95
+    tpa:
+      # 2 * ln(80 / 640): matches V3 initially, not a paper-reported optimum.
+      log_snr_offset: -4.1588830833596715
+train_dataset:
+  params:
+    roots: [./data/SIRST4]
+test_dataset:
+  mixed:
+    params:
+      roots: [./data/SIRST4]
